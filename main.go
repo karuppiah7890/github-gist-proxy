@@ -11,6 +11,8 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("GET /livez", livenessHandler)
+
 	server := http.Server{
 		Addr:    "0.0.0.0:8080",
 		Handler: mux,
@@ -21,4 +23,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("error occurred while trying to run server: %v", err)
 	}
+}
+
+func livenessHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
 }

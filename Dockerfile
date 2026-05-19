@@ -3,7 +3,7 @@ FROM golang:1.26.3-alpine AS builder
 
 WORKDIR /app
 
-COPY go.mod main.go ./
+COPY go.mod main.go pkg/ ./
 
 # Build a static binary for the proxy
 RUN CGO_ENABLED=0 go build -v -o /proxy .

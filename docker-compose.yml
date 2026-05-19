@@ -1,0 +1,19 @@
+services:
+    proxy:
+        ports:
+        # Binding only to localhost (127.0.0.1) loopback network interface
+        # and not to all network interfaces of the host for security
+        # reasons - so as to not expose the service to outside devices
+        # that can access the host through other network interfaces
+        - "127.0.0.1:8080:8080"
+        image: proxy
+        build:
+            context: .
+        # To help with rebuilding service image when service source code
+        # changes. This `develop` feature requires
+        # Docker Compose Version 2.22.0 and later
+        # https://docs.docker.com/reference/compose-file/develop/
+        develop:
+            watch:
+                - path: ./main.go
+                  action: rebuild

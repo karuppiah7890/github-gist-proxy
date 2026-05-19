@@ -1,5 +1,15 @@
 # Contributing to this project
 
+## Useful Extensions for VS Code
+
+If you are using VS Code, then please consider downloading some of the following useful extensions (plugins) for ease of development. These extensions are also mentioned as recommendations in the repo inside `.vscode/extensions.json`. VS Code will automatically read `.vscode/extensions.json` and recommend the extensions to you when you open the repo in VS Code. Just in case that gets missed due to some reason, here are the list of useful extensions for VS Code
+
+For Spell Check: https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker
+
+For Docker related development (Dockerfile, Docker Compose): https://marketplace.visualstudio.com/items?itemName=docker.docker
+
+For Golang Development: https://marketplace.visualstudio.com/items?itemName=golang.Go
+
 ## How to run it locally without using Containers or Kubernetes
 
 ### Building this project from source

@@ -100,3 +100,21 @@ docker compose up --watch --detach
 ```
 
 This will ensure that whenever there are source code changes in the service, the container image will be rebuilt and then the new container image will be started
+
+To check the service status, use this
+
+```bash
+docker compose ps
+```
+
+To get the service logs, use this
+
+```bash
+docker compose logs
+```
+
+To follow the logs in real time, do this
+
+```bash
+docker compose logs -f
+```

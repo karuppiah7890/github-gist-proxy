@@ -59,6 +59,14 @@ docker run --rm --publish 8080:8080 proxy
 
 ## How to run it locally with just Containers using Docker Compose
 
+> [!NOTE]
+> The `develop` feature in the Docker Compose configuration is available only
+> Docker Compose Version `2.22.0` and later. So verify your Docker Compose
+> Version, for example using `docker compose version`. If you use an older
+> version than `2.22.0`, then please remove the `develop` section in the
+> Docker Compose Configuration or else it will throw an error saying
+> `services.proxy Additional property develop is not allowed`
+
 The below command will build the two images and also run them for you
 
 ```bash
@@ -84,3 +92,11 @@ And if the build is cached, use below to create a new build without cache
 ```bash
 docker compose build --no-cache
 ```
+
+If you want to develop the service and also rebuild the image whenever there are changes in the source code, then the `develop` feature in the Docker Compose Configuration will come in handy. You just need to run this
+
+```bash
+docker compose up --watch --detach
+```
+
+This will ensure that whenever there are source code changes in the service, the container image will be rebuilt and then the new container image will be started

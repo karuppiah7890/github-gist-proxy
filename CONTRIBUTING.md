@@ -118,3 +118,8 @@ To follow the logs in real time, do this
 ```bash
 docker compose logs -f
 ```
+
+<!-- TODO: Add section for how to debug what's being sent as part of build context -->
+
+<!-- TODO: Add section for how to run on Kubernetes - say, using Helm -->
+<!-- ## How to run it locally with just Containers using Kubernetes -->

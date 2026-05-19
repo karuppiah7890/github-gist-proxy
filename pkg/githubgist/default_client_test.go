@@ -27,4 +27,6 @@ func TestListGists(t *testing.T) {
 	for _, gist := range gists {
 		t.Log(gist)
 	}
+
+	// TODO: Do one test with a non existent user and check if it gives error - like a 404 error
 }

@@ -56,3 +56,31 @@ Run `proxy` like this -
 ```bash
 docker run --rm --publish 8080:8080 proxy
 ```
+
+## How to run it locally with just Containers using Docker Compose
+
+The below command will build the two images and also run them for you
+
+```bash
+docker compose up --build --detach
+```
+
+The proxy is exposed to the host through 8080 port and is accessible only through the loopback network interface - `localhost` or `127.0.0.1` and not all network interfaces for security reasons - so as to not expose the service to outside devices that can access the host through other network interfaces
+
+To run the containers without building the image, just run
+
+```bash
+docker compose up --no-build --detach
+```
+
+If you want to just build the two images, just run
+
+```bash
+docker compose build
+```
+
+And if the build is cached, use below to create a new build without cache
+
+```bash
+docker compose build --no-cache
+```

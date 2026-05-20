@@ -133,7 +133,7 @@ docker compose logs -f
 
 ## How to run it locally with just Containers using Kubernetes
 
-We'll be using `helm` tool to deploy (install) and manage our services. Management means - get deployment information, upgrade our services, delete our services
+We'll be using `helm` tool to deploy (install) and manage our service. Management means - get deployment information, upgrade our service, delete our service
 
 Please install `helm` by following the official Helm website https://helm.sh/docs/intro/install or from the official Helm releases - https://github.com/helm/helm/releases
 

@@ -26,6 +26,12 @@ func NewClient() Client {
 	return c
 }
 
+type UserNotFoundErr string
+
+func (err UserNotFoundErr) Error() string {
+	return string(err)
+}
+
 func (c *defaultClient) ListGists(username string) (Gists, error) {
 	// TODO: Add `Accept` and `X-GitHub-Api-Version` headers
 	// TODO: Add timeouts using Context API
@@ -54,6 +60,10 @@ func (c *defaultClient) ListGists(username string) (Gists, error) {
 	}
 
 	statusCode := resp.StatusCode
+
+	if statusCode == 404 {
+		return nil, UserNotFoundErr(fmt.Sprintf("response code is %v which means http client error. Response body is: %v", statusCode, string(body)))
+	}
 
 	if statusCode >= 400 && statusCode <= 499 {
 		return nil, fmt.Errorf("response code is %v which means http client error: %v. Response body is: %v", statusCode, err, string(body))

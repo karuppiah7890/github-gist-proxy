@@ -131,5 +131,91 @@ docker compose logs -f
 
 <!-- TODO: Add section for how to debug what's being sent as part of build context -->
 
-<!-- TODO: Add section for how to run on Kubernetes - say, using Helm -->
-<!-- ## How to run it locally with just Containers using Kubernetes -->
+## How to run it locally with just Containers using Kubernetes
+
+We'll be using `helm` tool to deploy (install) and manage our services. Management means - get deployment information, upgrade our services, delete our services
+
+Please install `helm` by following the official Helm website https://helm.sh/docs/intro/install or from the official Helm releases - https://github.com/helm/helm/releases
+
+Once installed, also check if a tool like `minikube` or `kind` or similar is installed to run local Kubernetes clusters
+
+You can install `minikube` or `kind` by following the instructions here - https://kubernetes.io/docs/tasks/tools/
+
+We'll be using `minikube` with a driver like `docker` for example
+
+```bash
+minikube start
+```
+
+And once the Kubernetes cluster is ready, ensure that the container images are available in the worker node's container runtime. For example, for `minikube`, you can access the container runtime like this -
+
+First get details to connect to the container daemon
+
+```bash
+minikube docker-env
+```
+
+For a specific minikube profile, you can do this -
+
+```bash
+minikube --profile <profile-name> docker-env
+```
+
+Then run the commands that it gives in your shell. You can also do this -
+
+```bash
+eval $(minikube docker-env)
+```
+
+Once you do this, you can see the list of containers running in the daemon like this -
+
+```bash
+docker ps
+```
+
+Now just build the image using `docker build` or `docker compose build`. We'll use `docker compose build` to build the image, like this -
+
+```bash
+docker compose build
+```
+
+Once done, check if the container daemon has the image of `github-gist-proxy` service named `proxy` using this -
+
+```bash
+docker images
+```
+
+You should see `proxy:latest`
+
+Now you can use the helm chart to run the service
+
+```bash
+helm install payment-gateway helm-chart --set image.repository=proxy --set image.tag=latest --set service.port=8080 --set livenessProbe.httpGet.path=/livez --set readinessProbe.httpGet.path=/livez
+```
+
+To run it easily with lesser command line arguments, you can use the helm values yaml files for the service like this -
+
+```bash
+helm install proxy helm-chart --values helm-values.yaml
+```
+
+You can check the helm releases to see that they are installed and you can also follow the instructions in the post release notes to port forward the pod's container's port to the host to connect to it
+
+```bash
+helm ls
+```
+
+Next we'll be using `kubectl` to access the Kubernetes Cluster resources
+
+Install `kubectl` from https://dl.k8s.io or by following https://kubernetes.io/docs/tasks/tools/
+
+Or you can use `minikube kubectl` command to run `kubectl`
+
+```bash
+kubectl get deployments
+
+kubectl get pods
+
+kubectl get services
+```
+

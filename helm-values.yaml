@@ -1,0 +1,14 @@
+image:
+  repository: proxy
+  tag: latest
+
+service:
+  port: 8080
+
+livenessProbe:
+  httpGet:
+    path: /livez
+
+readinessProbe:
+  httpGet:
+    path: /livez

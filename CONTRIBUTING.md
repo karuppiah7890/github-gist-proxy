@@ -190,7 +190,7 @@ You should see `proxy:latest`
 Now you can use the helm chart to run the service
 
 ```bash
-helm install payment-gateway helm-chart --set image.repository=proxy --set image.tag=latest --set service.port=8080 --set livenessProbe.httpGet.path=/livez --set readinessProbe.httpGet.path=/livez
+helm install proxy helm-chart --set image.repository=proxy --set image.tag=latest --set service.port=8080 --set livenessProbe.httpGet.path=/livez --set readinessProbe.httpGet.path=/livez
 ```
 
 To run it easily with lesser command line arguments, you can use the helm values yaml files for the service like this -

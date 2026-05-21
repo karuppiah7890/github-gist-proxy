@@ -187,6 +187,8 @@ docker images
 
 You should see `proxy:latest`
 
+We have a generic helm chart that can run any web service in general. By default it runs `nginx` for you. But you can pass in configuration to run any kind of simple web service
+
 Now you can use the helm chart to run the service
 
 ```bash

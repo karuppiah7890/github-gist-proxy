@@ -22,3 +22,5 @@ Dockerfile.debug
 .vscode/
 
 README.md
+
+.dockerignore

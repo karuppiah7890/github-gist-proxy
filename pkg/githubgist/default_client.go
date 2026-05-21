@@ -36,8 +36,6 @@ func (err UserNotFoundErr) Error() string {
 func (c *defaultClient) ListGists(username string, page int) (Gists, error) {
 	// TODO: Add `Accept` and `X-GitHub-Api-Version` headers
 	// TODO: Add timeouts using Context API
-	// TODO: Send pagination inputs - to paginate results and not just show
-	// first page always
 	// TODO: Check and Sanitize `username` parameter, either here or in
 	// the caller - so as to avoid any injection through user input
 	req, err := http.NewRequest("GET", fmt.Sprintf("https://api.github.com/users/%s/gists?page=%d", username, page), nil)

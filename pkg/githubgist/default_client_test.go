@@ -10,7 +10,7 @@ func TestListGists(t *testing.T) {
 
 	t.Run("users who exist", func(t *testing.T) {
 		username := "sagikazarmark"
-		gists, err := githubgist.NewClient().ListGists(username)
+		gists, err := githubgist.NewClient().ListGists(username, 1)
 		if err != nil {
 			t.Errorf("expected no error while listing gists of the user %s, but got one error: %v", username, err)
 		}
@@ -22,7 +22,7 @@ func TestListGists(t *testing.T) {
 		}
 
 		username = "iximiuz"
-		gists, err = githubgist.NewClient().ListGists(username)
+		gists, err = githubgist.NewClient().ListGists(username, 1)
 		if err != nil {
 			t.Errorf("expected no error while listing gists of the user %s, but got one error: %v", username, err)
 		}
@@ -36,7 +36,7 @@ func TestListGists(t *testing.T) {
 
 	t.Run("user who does not exist", func(t *testing.T) {
 		username := "non-existent-user-big-username-unimaginable-wow-great"
-		gists, err := githubgist.NewClient().ListGists(username)
+		gists, err := githubgist.NewClient().ListGists(username, 1)
 		if err == nil {
 			t.Errorf("expected error while listing gists of the user that is supposed to be non existent - %s, but got no error", username)
 		}
@@ -59,7 +59,7 @@ func TestListGists(t *testing.T) {
 	// any username with space in it should give user not found
 	t.Run("space in username", func(t *testing.T) {
 		username := "something lol"
-		gists, err := githubgist.NewClient().ListGists(username)
+		gists, err := githubgist.NewClient().ListGists(username, 1)
 		if err == nil {
 			t.Errorf("expected error while listing gists of the user that is supposed to be non existent - %s, but got no error", username)
 		}

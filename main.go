@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"proxy/pkg/githubgist"
+	"strconv"
 )
 
 func main() {
@@ -35,7 +36,21 @@ func livenessHandler(w http.ResponseWriter, r *http.Request) {
 
 func usernameHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.PathValue("username")
-	gists, err := githubgist.NewClient().ListGists(username)
+	page := 1
+	if r.URL.Query().Has("page") {
+		pageInput := r.URL.Query().Get("page")
+		pageNumber, err := strconv.Atoi(pageInput)
+		if err != nil {
+			fmt.Printf("an error occurred while converting %s page input to number: %v", pageInput, err)
+			w.WriteHeader(http.StatusBadRequest)
+			w.Header().Add("Content-Type", "application/json")
+			w.Write([]byte(fmt.Sprintf("{\"message\": \"page '%s' is not a number\"}", pageInput)))
+			return
+		}
+		page = pageNumber
+	}
+
+	gists, err := githubgist.NewClient().ListGists(username, page)
 	if err != nil {
 		if e, ok := errors.AsType[githubgist.UserNotFoundErr](err); ok {
 			fmt.Printf("an error occurred while listing gists of the user %s: %v. it seems like a user not found error: %v", username, err, e)

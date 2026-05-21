@@ -7,5 +7,5 @@ type Gist struct {
 type Gists []Gist
 
 type Client interface {
-	ListGists(username string) (Gists, error)
+	ListGists(username string, page int) (Gists, error)
 }

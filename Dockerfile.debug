@@ -1,0 +1,8 @@
+# To debug Dockerfile.
+# For example - to debug the build context sent for build
+FROM busybox
+
+COPY . /build_context
+
+# To list out all the files included in the build context
+RUN find /build_context

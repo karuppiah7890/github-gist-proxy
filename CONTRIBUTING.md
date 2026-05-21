@@ -24,6 +24,20 @@ You can build this project by simply running
 go build -v
 ```
 
+### Running tests
+
+To run tests quietly with short output, run this -
+
+```bash
+go test ./...
+```
+
+To run tests with verbose logging which has debug logs, run this -
+
+```bash
+go test -v ./...
+```
+
 ### Running this project
 
 After building it from source, you can run this project by simply running
@@ -220,4 +234,3 @@ kubectl get pods
 
 kubectl get services
 ```
-

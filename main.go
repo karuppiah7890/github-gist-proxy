@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	// TODO: use structured logging - for example JSON logs
 	fmt.Println("Running GitHub Gist Proxy")
 
 	mux := http.NewServeMux()
@@ -41,6 +42,7 @@ func usernameHandler(w http.ResponseWriter, r *http.Request) {
 		pageInput := r.URL.Query().Get("page")
 		pageNumber, err := strconv.Atoi(pageInput)
 		if err != nil {
+			// TODO: use structured logging - for example JSON logs
 			fmt.Printf("an error occurred while converting %s page input to number: %v\n\n", pageInput, err)
 			w.WriteHeader(http.StatusBadRequest)
 			w.Header().Add("Content-Type", "application/json")
@@ -53,6 +55,7 @@ func usernameHandler(w http.ResponseWriter, r *http.Request) {
 	gists, err := githubgist.NewClient().ListGists(username, page)
 	if err != nil {
 		if e, ok := errors.AsType[githubgist.UserNotFoundErr](err); ok {
+			// TODO: use structured logging - for example JSON logs
 			fmt.Printf("an error occurred while listing gists of the user %s: %v. it seems like a user not found error: %v\n\n", username, err, e)
 			w.WriteHeader(http.StatusNotFound)
 			w.Header().Add("Content-Type", "application/json")
@@ -72,6 +75,7 @@ func usernameHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func reportUnexpectedError(err error, w http.ResponseWriter, username string) {
+	// TODO: use structured logging - for example JSON logs
 	fmt.Printf("an unexpected error occurred while listing gists of the user %s: %v\n\n", username, err)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Header().Add("Content-Type", "application/json")

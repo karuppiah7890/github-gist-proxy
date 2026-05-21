@@ -15,12 +15,11 @@ func TestListGists(t *testing.T) {
 			t.Errorf("expected no error while listing gists of the user %s, but got one error: %v", username, err)
 		}
 
-		_ = gists
 		// For Debugging the test
-		// t.Logf("the list of gists of %s", username)
-		// for _, gist := range gists {
-		// 	t.Log(gist)
-		// }
+		t.Logf("the list of gists of %s", username)
+		for _, gist := range gists {
+			t.Log(gist)
+		}
 
 		username = "iximiuz"
 		gists, err = githubgist.NewClient().ListGists(username)
@@ -28,12 +27,11 @@ func TestListGists(t *testing.T) {
 			t.Errorf("expected no error while listing gists of the user %s, but got one error: %v", username, err)
 		}
 
-		_ = gists
 		// For Debugging the test
-		// t.Logf("the list of gists of %s", username)
-		// for _, gist := range gists {
-		// 	t.Log(gist)
-		// }
+		t.Logf("the list of gists of %s", username)
+		for _, gist := range gists {
+			t.Log(gist)
+		}
 	})
 
 	t.Run("user who does not exist", func(t *testing.T) {
@@ -48,7 +46,7 @@ func TestListGists(t *testing.T) {
 		if e, ok := errors.AsType[githubgist.UserNotFoundErr](err); ok {
 			_ = e
 			// For debugging
-			// t.Logf("as expected, we got an error. error is %v", e)
+			t.Logf("as expected, we got an error. error is %v", e)
 		} else {
 			t.Errorf("expected a specific kind of error while listing gists of a user that is supposed to be non existent - user: %s, but got a different error: error type: %T, error: %v", username, err, err)
 		}
@@ -71,7 +69,7 @@ func TestListGists(t *testing.T) {
 		if e, ok := errors.AsType[githubgist.UserNotFoundErr](err); ok {
 			_ = e
 			// For debugging
-			// t.Logf("as expected, we got an error. error is %v", e)
+			t.Logf("as expected, we got an error. error is %v", e)
 		} else {
 			t.Errorf("expected a specific kind of error while listing gists of a user that is supposed to be non existent - user: %s, but got a different error: error type: %T, error: %v", username, err, err)
 		}

@@ -19,6 +19,12 @@ func main() {
 	mux.HandleFunc("GET /livez", livenessHandler)
 	mux.HandleFunc("GET /{username}", usernameHandler)
 
+	// TODO: Add readiness endpoint
+	// TODO: Add OS signal handler and handle SIGTERM
+	// and make readiness endpoint return not-ready when
+	// shutting down, and process all pending requests before shutting
+	// down - for a graceful shutdown
+
 	server := http.Server{
 		Addr:    "0.0.0.0:8080",
 		Handler: mux,

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"proxy/pkg/githubgist"
 )
 
 func main() {
@@ -32,5 +35,30 @@ func livenessHandler(w http.ResponseWriter, r *http.Request) {
 
 func usernameHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.PathValue("username")
-	w.Write([]byte(username))
+	gists, err := githubgist.NewClient().ListGists(username)
+	if err != nil {
+		if e, ok := errors.AsType[githubgist.UserNotFoundErr](err); ok {
+			fmt.Printf("an error occurred while listing gists of the user %s: %v. it seems like a user not found error: %v", username, err, e)
+			w.WriteHeader(http.StatusNotFound)
+			w.Header().Add("Content-Type", "application/json")
+			w.Write([]byte(fmt.Sprintf("{\"message\": \"username '%s' does not exist\"}", username)))
+		} else {
+			reportUnexpectedError(err, w, username)
+		}
+		return
+	}
+
+	gistsJson, err := json.Marshal(gists)
+	if err != nil {
+		reportUnexpectedError(err, w, username)
+		return
+	}
+	w.Write(gistsJson)
+}
+
+func reportUnexpectedError(err error, w http.ResponseWriter, username string) {
+	fmt.Printf("an unexpected error occurred while listing gists of the user %s: %v", username, err)
+	w.WriteHeader(http.StatusInternalServerError)
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(fmt.Sprintf("{\"message\": \"an error occurred while getting the gists of the username '%s'. please contact support or the api admin to resolve the issue\"}", username)))
 }

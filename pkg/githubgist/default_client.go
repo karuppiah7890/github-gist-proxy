@@ -19,6 +19,7 @@ type defaultClient struct {
 }
 
 var c = &defaultClient{
+	// TODO: Add timeout for the HTTP Client
 	http.DefaultClient,
 }
 
